@@ -65,7 +65,7 @@ End-to-end pipeline: generate random graphs with NetGameSim → partition across
 ### 1. Clone this repo with the NetGameSim submodule
 
 ```powershell
-git clone --recurse-submodules <your-repo-url>
+git clone --recurse-submodules https://github.com/Ajani4/CS453_Spring2026.git
 cd CS453_Project
 ```
 
@@ -91,7 +91,7 @@ Before running NetGameSim you must tell it where to write its output files. Open
 netgamesim\GenericSimUtilities\src\main\resources\application.conf
 ```
 
-Find the `outputDirectory` line and set it to the CS453_Project/outputsfolder inside this project and not netgamesim/outputs. **Use forward slashes even on Windows** — backslashes cause a parse error in HOCON config files:
+Find the `outputDirectory` line and set it to the CS453_Project/outputsfolder inside this project and not netgamesim/outputs. Use forward slashes even on Windows. Backslashes cause a parse error in HOCON config files:
 
 ```hocon
 NGSimulator {
@@ -134,7 +134,7 @@ seed = 42
 directed = false
 ```
 
-The `dot_file` paths are relative to the project root. If your `outputDirectory` in `application.conf` points to `outputs/` inside this project (as shown in step 3), no changes are needed — the defaults will work.
+The `dot_file` paths are relative to the project root. If your `outputDirectory` in `application.conf` points to `outputs` inside this project (as shown in step 3), no changes are needed — the defaults will work.
 
 ### 5. Download json.hpp
 
@@ -160,7 +160,7 @@ The executables will be at:
 
 The commands below match the workflow specified in `CourseProject.md`. Run all commands from the project root.
 
-### Step 1 — Generate graphs with NetGameSim
+### Step 1: Generate graphs with NetGameSim
 
 Make sure `application.conf` is configured as described in the Installation section above. Then run from the project root:
 
@@ -180,7 +180,7 @@ cd ..
 
 NetGameSim will write `small.ngs.dot` and `large.ngs.dot` directly into the `outputs/` folder (because `outputDirectory` in `application.conf` points there). No manual copy step is needed.
 
-### Step 2 — Generate and enrich a connected weighted graph
+### Step 2: Generate and enrich a connected weighted graph
 
 ```powershell
 # Windows
@@ -190,7 +190,7 @@ tools\graph_export\run.bat configs\small.conf outputs\graph.json
 ./tools/graph_export/run.sh configs/small.conf outputs/graph.json
 ```
 
-### Step 3 — Partition the graph across ranks
+### Step 3: Partition the graph across ranks
 
 ```powershell
 # Windows
@@ -200,14 +200,14 @@ tools\partition\run.bat outputs\graph.json --ranks 8 --out outputs\part.json
 ./tools/partition/run.sh outputs/graph.json --ranks 8 --out outputs/part.json
 ```
 
-### Step 4 — Build the MPI runtime
+### Step 4: Build the MPI runtime
 
 ```powershell
 cmake -S mpi_runtime -B build
 cmake --build build
 ```
 
-### Step 5 — Run leader election
+### Step 5: Run leader election
 
 ```powershell
 # Windows
@@ -217,7 +217,7 @@ mpiexec -n 8 build\Debug\ngs_mpi.exe --graph outputs\graph.json --part outputs\p
 mpirun -n 8 ./build/ngs_mpi --graph outputs/graph.json --part outputs/part.json --algo leader --rounds 200
 ```
 
-### Step 6 — Run distributed Dijkstra
+### Step 6: Run distributed Dijkstra
 
 ```powershell
 # Windows
@@ -232,7 +232,7 @@ mpirun -n 8 ./build/ngs_mpi --graph outputs/graph.json --part outputs/part.json 
 ## Running Tests
 
 ```powershell
-mpiexec -n 4 mpi_runtime\build\Debug\ngs_tests.exe
+mpiexec -n 4 build\Debug\ngs_tests.exe
 ```
 
 Expected output: `ALL TESTS PASSED` with 8 tests.
