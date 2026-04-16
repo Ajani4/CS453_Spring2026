@@ -65,7 +65,7 @@ End-to-end pipeline: generate random graphs with NetGameSim → partition across
 ### 1. Clone this repo with the NetGameSim submodule
 
 ```powershell
-git clone --recurse-submodules https://github.com/Ajani4/CS453_Spring2026.git
+git clone --recurse-submodules https://github.com/0x1DOCD00D/NetGameSim
 cd CS453_Project
 ```
 
