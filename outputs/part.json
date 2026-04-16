@@ -1,0 +1,783 @@
+{
+  "num_nodes": 51,
+  "num_ranks": 8,
+  "strategy": "contiguous",
+  "edge_cuts": 90,
+  "owner_map": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 1,
+    "8": 1,
+    "9": 1,
+    "10": 1,
+    "11": 1,
+    "12": 1,
+    "13": 2,
+    "14": 2,
+    "15": 2,
+    "16": 2,
+    "17": 2,
+    "18": 2,
+    "19": 2,
+    "20": 3,
+    "21": 3,
+    "22": 3,
+    "23": 3,
+    "24": 3,
+    "25": 3,
+    "26": 4,
+    "27": 4,
+    "28": 4,
+    "29": 4,
+    "30": 4,
+    "31": 4,
+    "32": 5,
+    "33": 5,
+    "34": 5,
+    "35": 5,
+    "36": 5,
+    "37": 5,
+    "38": 5,
+    "39": 6,
+    "40": 6,
+    "41": 6,
+    "42": 6,
+    "43": 6,
+    "44": 6,
+    "45": 7,
+    "46": 7,
+    "47": 7,
+    "48": 7,
+    "49": 7,
+    "50": 7
+  },
+  "ranks": {
+    "0": {
+      "owned_nodes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "local_edges": [
+        {
+          "from": 3,
+          "to": 4,
+          "weight": 7.0
+        },
+        {
+          "from": 4,
+          "to": 3,
+          "weight": 7.0
+        }
+      ],
+      "cross_edges": [
+        {
+          "from": 0,
+          "to": 9,
+          "weight": 2.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 0,
+          "to": 10,
+          "weight": 5.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 1,
+          "to": 22,
+          "weight": 6.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 1,
+          "to": 39,
+          "weight": 8.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 2,
+          "to": 7,
+          "weight": 8.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 3,
+          "to": 21,
+          "weight": 6.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 3,
+          "to": 38,
+          "weight": 3.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 4,
+          "to": 13,
+          "weight": 4.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 5,
+          "to": 17,
+          "weight": 6.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 5,
+          "to": 28,
+          "weight": 8.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 6,
+          "to": 27,
+          "weight": 1.0,
+          "dst_rank": 4
+        }
+      ]
+    },
+    "1": {
+      "owned_nodes": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "local_edges": [],
+      "cross_edges": [
+        {
+          "from": 7,
+          "to": 2,
+          "weight": 8.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 7,
+          "to": 39,
+          "weight": 7.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 8,
+          "to": 14,
+          "weight": 4.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 8,
+          "to": 40,
+          "weight": 7.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 9,
+          "to": 0,
+          "weight": 2.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 9,
+          "to": 47,
+          "weight": 5.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 10,
+          "to": 0,
+          "weight": 5.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 10,
+          "to": 33,
+          "weight": 7.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 11,
+          "to": 24,
+          "weight": 1.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 11,
+          "to": 45,
+          "weight": 8.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 12,
+          "to": 15,
+          "weight": 4.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 12,
+          "to": 40,
+          "weight": 1.0,
+          "dst_rank": 6
+        }
+      ]
+    },
+    "2": {
+      "owned_nodes": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "local_edges": [
+        {
+          "from": 16,
+          "to": 19,
+          "weight": 1.0
+        },
+        {
+          "from": 17,
+          "to": 18,
+          "weight": 2.0
+        },
+        {
+          "from": 18,
+          "to": 17,
+          "weight": 2.0
+        },
+        {
+          "from": 19,
+          "to": 16,
+          "weight": 1.0
+        }
+      ],
+      "cross_edges": [
+        {
+          "from": 13,
+          "to": 4,
+          "weight": 4.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 13,
+          "to": 50,
+          "weight": 9.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 14,
+          "to": 8,
+          "weight": 4.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 14,
+          "to": 25,
+          "weight": 9.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 15,
+          "to": 12,
+          "weight": 4.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 15,
+          "to": 27,
+          "weight": 9.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 16,
+          "to": 38,
+          "weight": 2.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 17,
+          "to": 5,
+          "weight": 6.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 18,
+          "to": 20,
+          "weight": 1.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 19,
+          "to": 28,
+          "weight": 8.0,
+          "dst_rank": 4
+        }
+      ]
+    },
+    "3": {
+      "owned_nodes": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "local_edges": [],
+      "cross_edges": [
+        {
+          "from": 20,
+          "to": 18,
+          "weight": 1.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 20,
+          "to": 48,
+          "weight": 1.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 21,
+          "to": 3,
+          "weight": 6.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 22,
+          "to": 1,
+          "weight": 6.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 22,
+          "to": 40,
+          "weight": 3.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 23,
+          "to": 45,
+          "weight": 5.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 23,
+          "to": 50,
+          "weight": 7.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 24,
+          "to": 11,
+          "weight": 1.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 24,
+          "to": 27,
+          "weight": 3.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 25,
+          "to": 14,
+          "weight": 9.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 25,
+          "to": 47,
+          "weight": 2.0,
+          "dst_rank": 7
+        }
+      ]
+    },
+    "4": {
+      "owned_nodes": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "local_edges": [
+        {
+          "from": 27,
+          "to": 30,
+          "weight": 2.0
+        },
+        {
+          "from": 30,
+          "to": 27,
+          "weight": 2.0
+        }
+      ],
+      "cross_edges": [
+        {
+          "from": 26,
+          "to": 44,
+          "weight": 8.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 26,
+          "to": 49,
+          "weight": 2.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 27,
+          "to": 6,
+          "weight": 1.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 27,
+          "to": 15,
+          "weight": 9.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 27,
+          "to": 24,
+          "weight": 3.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 28,
+          "to": 5,
+          "weight": 8.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 28,
+          "to": 19,
+          "weight": 8.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 29,
+          "to": 40,
+          "weight": 4.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 29,
+          "to": 44,
+          "weight": 7.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 29,
+          "to": 49,
+          "weight": 1.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 30,
+          "to": 35,
+          "weight": 1.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 31,
+          "to": 36,
+          "weight": 1.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 31,
+          "to": 37,
+          "weight": 6.0,
+          "dst_rank": 5
+        }
+      ]
+    },
+    "5": {
+      "owned_nodes": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "local_edges": [
+        {
+          "from": 32,
+          "to": 34,
+          "weight": 6.0
+        },
+        {
+          "from": 33,
+          "to": 37,
+          "weight": 2.0
+        },
+        {
+          "from": 34,
+          "to": 32,
+          "weight": 6.0
+        },
+        {
+          "from": 37,
+          "to": 33,
+          "weight": 2.0
+        }
+      ],
+      "cross_edges": [
+        {
+          "from": 32,
+          "to": 48,
+          "weight": 9.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 33,
+          "to": 10,
+          "weight": 7.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 34,
+          "to": 43,
+          "weight": 8.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 35,
+          "to": 30,
+          "weight": 1.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 35,
+          "to": 41,
+          "weight": 2.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 36,
+          "to": 31,
+          "weight": 1.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 36,
+          "to": 46,
+          "weight": 8.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 37,
+          "to": 31,
+          "weight": 6.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 38,
+          "to": 3,
+          "weight": 3.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 38,
+          "to": 16,
+          "weight": 2.0,
+          "dst_rank": 2
+        }
+      ]
+    },
+    "6": {
+      "owned_nodes": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "local_edges": [
+        {
+          "from": 42,
+          "to": 43,
+          "weight": 8.0
+        },
+        {
+          "from": 43,
+          "to": 42,
+          "weight": 8.0
+        }
+      ],
+      "cross_edges": [
+        {
+          "from": 39,
+          "to": 1,
+          "weight": 8.0,
+          "dst_rank": 0
+        },
+        {
+          "from": 39,
+          "to": 7,
+          "weight": 7.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 40,
+          "to": 8,
+          "weight": 7.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 40,
+          "to": 12,
+          "weight": 1.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 40,
+          "to": 22,
+          "weight": 3.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 40,
+          "to": 29,
+          "weight": 4.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 41,
+          "to": 35,
+          "weight": 2.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 42,
+          "to": 46,
+          "weight": 5.0,
+          "dst_rank": 7
+        },
+        {
+          "from": 43,
+          "to": 34,
+          "weight": 8.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 44,
+          "to": 26,
+          "weight": 8.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 44,
+          "to": 29,
+          "weight": 7.0,
+          "dst_rank": 4
+        }
+      ]
+    },
+    "7": {
+      "owned_nodes": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "local_edges": [],
+      "cross_edges": [
+        {
+          "from": 45,
+          "to": 11,
+          "weight": 8.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 45,
+          "to": 23,
+          "weight": 5.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 46,
+          "to": 36,
+          "weight": 8.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 46,
+          "to": 42,
+          "weight": 5.0,
+          "dst_rank": 6
+        },
+        {
+          "from": 47,
+          "to": 9,
+          "weight": 5.0,
+          "dst_rank": 1
+        },
+        {
+          "from": 47,
+          "to": 25,
+          "weight": 2.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 48,
+          "to": 20,
+          "weight": 1.0,
+          "dst_rank": 3
+        },
+        {
+          "from": 48,
+          "to": 32,
+          "weight": 9.0,
+          "dst_rank": 5
+        },
+        {
+          "from": 49,
+          "to": 26,
+          "weight": 2.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 49,
+          "to": 29,
+          "weight": 1.0,
+          "dst_rank": 4
+        },
+        {
+          "from": 50,
+          "to": 13,
+          "weight": 9.0,
+          "dst_rank": 2
+        },
+        {
+          "from": 50,
+          "to": 23,
+          "weight": 7.0,
+          "dst_rank": 3
+        }
+      ]
+    }
+  }
+}

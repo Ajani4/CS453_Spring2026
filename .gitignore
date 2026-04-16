@@ -1,0 +1,54 @@
+# Build artifacts
+build/
+mpi_runtime/build/
+*.exe
+*.obj
+*.o
+*.lib
+*.dll
+*.pdb
+*.ilk
+*.exp
+
+# CMake generated
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Scala / SBT (for netgamesim submodule, just in case)
+target/
+.bsp/
+.metals/
+.bloop/
+project/target/
+project/project/
+
+# Generated outputs (keep .gitkeep, exclude large generated files)
+outputs/*.ngs
+outputs/*.ngs.perturbed
+outputs/*.dot
+outputs/*.png
+
+# Keep these outputs committed (experiment results and JSON graphs)
+!outputs/.gitkeep
+!outputs/*.json
+!outputs/*.csv
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.suo
+*.user
+*.sln.docstates
+
+# OS files
+.DS_Store
+Thumbs.db

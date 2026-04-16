@@ -1,0 +1,38 @@
+[
+  {
+    "label": "small (~50 nodes)",
+    "strategy": "contiguous",
+    "ranks": 4,
+    "num_nodes": 51,
+    "edge_cuts": 72,
+    "runtime_ms": null,
+    "total_msgs": null
+  },
+  {
+    "label": "small (~50 nodes)",
+    "strategy": "round-robin",
+    "ranks": 4,
+    "num_nodes": 51,
+    "edge_cuts": 84,
+    "runtime_ms": null,
+    "total_msgs": null
+  },
+  {
+    "label": "large (~300 nodes)",
+    "strategy": "contiguous",
+    "ranks": 4,
+    "num_nodes": 301,
+    "edge_cuts": 862,
+    "runtime_ms": null,
+    "total_msgs": null
+  },
+  {
+    "label": "large (~300 nodes)",
+    "strategy": "round-robin",
+    "ranks": 4,
+    "num_nodes": 301,
+    "edge_cuts": 854,
+    "runtime_ms": null,
+    "total_msgs": null
+  }
+]

@@ -1,0 +1,3 @@
+[submodule "netgamesim"]
+	path = netgamesim
+	url = https://github.com/0x1DOCD00D/NetGameSim
