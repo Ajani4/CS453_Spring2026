@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "label": "small",
+    "num_nodes": 51,
+    "ranks": 4,
+    "le_iters": 13,
+    "le_msgs": 264,
+    "dijk_iters": 51,
+    "dijk_msgs": 612,
+    "wall_ms": 48.46000671386719
+  },
+  {
+    "label": "large",
+    "num_nodes": 301,
+    "ranks": 4,
+    "le_iters": 6,
+    "le_msgs": 124,
+    "dijk_iters": 301,
+    "dijk_msgs": 3612,
+    "wall_ms": 64.97955322265625
+  }
+]

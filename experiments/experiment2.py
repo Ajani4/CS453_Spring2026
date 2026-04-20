@@ -17,9 +17,21 @@ import time
 
 GRAPH_EXPORT = "tools/graph_export/export_graph.py"
 PARTITION    = "tools/partition/partition_graph.py"
-MPI_BIN      = os.path.join("mpi_runtime", "build", "Debug", "ngs_mpi.exe")
-if not os.path.exists(MPI_BIN):
-    MPI_BIN  = os.path.join("mpi_runtime", "build", "ngs_mpi")
+
+def find_mpi_binary():
+    candidates = [
+        os.path.join("build", "Debug", "ngs_mpi.exe"),
+        os.path.join("build", "Release", "ngs_mpi.exe"),
+        os.path.join("build", "ngs_mpi"),
+        os.path.join("mpi_runtime", "build", "Debug", "ngs_mpi.exe"),
+        os.path.join("mpi_runtime", "build", "ngs_mpi"),
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return c
+    return None
+
+MPI_BIN = find_mpi_binary()
 
 CONFIGS = [
     {

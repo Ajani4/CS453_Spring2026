@@ -5,8 +5,8 @@
     "ranks": 4,
     "num_nodes": 51,
     "edge_cuts": 72,
-    "runtime_ms": null,
-    "total_msgs": null
+    "runtime_ms": 43.31207275390625,
+    "total_msgs": 612
   },
   {
     "label": "small (~50 nodes)",
@@ -14,8 +14,8 @@
     "ranks": 4,
     "num_nodes": 51,
     "edge_cuts": 84,
-    "runtime_ms": null,
-    "total_msgs": null
+    "runtime_ms": 43.18046569824219,
+    "total_msgs": 612
   },
   {
     "label": "large (~300 nodes)",
@@ -23,8 +23,8 @@
     "ranks": 4,
     "num_nodes": 301,
     "edge_cuts": 862,
-    "runtime_ms": null,
-    "total_msgs": null
+    "runtime_ms": 61.81645393371582,
+    "total_msgs": 3612
   },
   {
     "label": "large (~300 nodes)",
@@ -32,7 +32,7 @@
     "ranks": 4,
     "num_nodes": 301,
     "edge_cuts": 854,
-    "runtime_ms": null,
-    "total_msgs": null
+    "runtime_ms": 65.2010440826416,
+    "total_msgs": 3612
   }
 ]
