@@ -1,4 +1,4 @@
-# REPORT.md — CS453 Spring 2026 Project Report
+# REPORT.md - CS453 Spring 2026 Project Report
 **NetGameSim to MPI Distributed Algorithms**
 
 ---
@@ -7,7 +7,7 @@
 
 The goal of this project is to build a complete end-to-end pipeline that takes a synthetically generated network graph, distributes it across multiple MPI processes, and runs two classic distributed algorithms on it: leader election and single-source shortest paths.
 
-The central design idea is that **graph nodes and MPI ranks are decoupled**. Rather than assigning one node per process (which would require as many processes as nodes), each MPI rank owns a subset of graph nodes. This mirrors how real distributed systems work — a cluster of machines each managing a portion of a larger logical data set.
+The central design idea is that graph nodes and MPI ranks are decoupled Rather than assigning one node per process, each MPI rank owns a subset of graph nodes. This mirrors how real distributed systems work as a cluster of machines each managing a portion of a larger logical data set.
 
 The pipeline has four distinct stages:
 
@@ -19,7 +19,7 @@ The pipeline has four distinct stages:
 
 4. **MPI runtime**: Load the partition on each rank and run FloodMax leader election and distributed Dijkstra. Collect metrics and write results.
 
-The key insight driving the design is that by doing all graph structure analysis in Python before the MPI program starts, the C++ runtime can focus entirely on distributed algorithm logic — loading a pre-built partition and passing messages — rather than mixing graph parsing with algorithm execution.
+The key insight driving the design is that by doing all graph structure analysis in Python before the MPI program starts, the C++ runtime can focus entirely on distributed algorithm logic rather than mixing graph parsing with algorithm execution.
 
 ---
 
@@ -91,13 +91,13 @@ The runtime is written in C++17 and uses MS-MPI on Windows / OpenMPI on Linux. I
 ### MPI Message Patterns
 
 **Leader election** uses three MPI operations per round:
-1. `MPI_Alltoall` — exchange the sizes of candidate update messages between all rank pairs
-2. `MPI_Isend` / `MPI_Irecv` — non-blocking send/receive of `(dst_node, candidate_id)` pairs for cross-rank edges
-3. `MPI_Allreduce (MPI_MAX)` — convergence check: detect whether any rank updated any candidate this round
+1. `MPI_Alltoall`: exchange the sizes of candidate update messages between all rank pairs
+2. `MPI_Isend` / `MPI_Irecv`: non-blocking send/receive of `(dst_node, candidate_id)` pairs for cross-rank edges
+3. `MPI_Allreduce (MPI_MAX)`: convergence check: detect whether any rank updated any candidate this round
 
 **Dijkstra** uses two MPI operations per iteration:
-1. `MPI_Allgather` — each rank proposes its best `(distance, node)` pair; all ranks receive all proposals and identify the global minimum
-2. `MPI_Bcast` — the owning rank broadcasts the relaxation list for the settled node to all other ranks
+1. `MPI_Allgather`: each rank proposes its best `(distance, node)` pair; all ranks receive all proposals and identify the global minimum
+2. `MPI_Bcast`: the owning rank broadcasts the relaxation list for the settled node to all other ranks
 
 All collectives are called in the same order on all ranks to prevent deadlock. MPI error codes are checked on critical calls.
 
@@ -117,7 +117,7 @@ All collectives are called in the same order on all ranks to prevent deadlock. M
 
 ## 3. Algorithm Choices
 
-### Leader Election — FloodMax
+### Leader Election - FloodMax
 
 **Choice rationale**: FloodMax is the standard textbook algorithm for leader election on a general connected graph. It is correct regardless of cycles, requires no prior knowledge of graph topology or diameter, and is straightforward to implement in a synchronous message-passing model. The alternative (ring-based algorithms like LCR) requires a ring topology that NetGameSim graphs do not have.
 
@@ -128,9 +128,9 @@ All collectives are called in the same order on all ranks to prevent deadlock. M
 
 **MPI mapping**: Nodes owned by the same rank update each other directly in memory (no MPI). Nodes on different ranks exchange `(dst_node, candidate_id)` pairs via non-blocking send/receive. A global convergence check (`MPI_Allreduce`) detects when no node changed its candidate, enabling early exit.
 
-**Correctness argument**: The candidate value at any node is monotonically non-decreasing. The global maximum ID is the only value that can stabilize everywhere — any other value will eventually be replaced by a higher one received from a neighbor. Since the graph is connected, the maximum propagates to all nodes within `diameter` rounds.
+**Correctness argument**: The candidate value at any node is monotonically non-decreasing. The global maximum ID is the only value that can stabilize everywhere. Any other value will eventually be replaced by a higher one received from a neighbor. Since the graph is connected, the maximum propagates to all nodes within `diameter` rounds.
 
-### Distributed Dijkstra — Parallel Global Minimum
+### Distributed Dijkstra - Parallel Global Minimum
 
 **Choice rationale**: The global-minimum-selection variant of Dijkstra is the standard correct MPI baseline for distributed shortest paths. It preserves the Dijkstra invariant exactly: on each step the globally optimal unsettled node is settled. This makes correctness easy to reason about and verify. The tradeoff is two collective operations per iteration, which is acceptable at the graph scales we test.
 
@@ -143,7 +143,7 @@ All collectives are called in the same order on all ranks to prevent deadlock. M
 
 **Why not ghost nodes**: The spec mentions ghost nodes as one approach. We chose broadcast-based relaxation instead. In the global-minimum variant, the settled node's relaxation list is small (bounded by its degree) and must be communicated to potentially all ranks anyway. Broadcasting it globally is simpler, avoids maintaining stale ghost state, and is correct. The tradeoff is higher per-iteration communication volume, which we note in the limitations.
 
-**Correctness assumption**: All edge weights must be strictly positive. Dijkstra's greedy selection is only valid when settling a node cannot decrease distances to already-settled nodes — this holds if and only if all weights are positive.
+**Correctness assumption**: All edge weights must be strictly positive. Dijkstra's greedy selection is only valid when settling a node cannot decrease distances to already-settled nodes. This holds if and only if all weights are positive.
 
 ---
 
@@ -160,7 +160,7 @@ All collectives are called in the same order on all ranks to prevent deadlock. M
 **Hypothesis**:
 - Dijkstra iterations will scale linearly with node count (N iterations for N nodes, since each iteration settles exactly one node).
 - Dijkstra message counts will scale linearly with N (two collectives per iteration).
-- Leader election iterations will scale with graph diameter, not node count — so a larger graph does not necessarily mean more rounds.
+- Leader election iterations will scale with graph diameter, not node count, so a larger graph does not necessarily mean more rounds.
 - Wall time will be dominated by MPI startup overhead at this scale, making both graphs appear similar in total time.
 
 ---
