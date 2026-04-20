@@ -1,4 +1,4 @@
-# CS453 Spring 2026 — NetGameSim to MPI Distributed Algorithms
+# CS453 Spring 2026 - NetGameSim to MPI Distributed Algorithms
 
 End-to-end pipeline: generate random graphs with NetGameSim → partition across MPI ranks → run distributed leader election and Dijkstra shortest paths.
 
@@ -53,7 +53,7 @@ End-to-end pipeline: generate random graphs with NetGameSim → partition across
 | Java JDK | 17+ | For NetGameSim |
 | Scala / SBT | 3.x / 1.8+ | For NetGameSim |
 | Python | 3.8+ | Graph export and partition tools |
-| MS-MPI | Latest | [Download](https://github.com/microsoft/Microsoft-MPI/releases) — install both `msmpisetup.exe` and `msmpisdk.msi` |
+| MS-MPI | Latest | [Download](https://github.com/microsoft/Microsoft-MPI/releases)  install both `msmpisetup.exe` and `msmpisdk.msi` |
 | Visual Studio 2022 | Community | C++ workload required |
 | CMake | 3.16+ | Included with Visual Studio or download separately |
 | Git | Any | Required for submodule checkout |
@@ -113,28 +113,28 @@ cd ..
 
 `configs/small.conf` and `configs/large.conf` tell the graph export tool which `.dot` file to read and what seed to use. Open each file and verify the `dot_file` path matches where NetGameSim will write its output. Small.conf and large.conf can be reconfigures to represent different ngs.dot outputs from NetGameSim but it should follow that small.conf is configured to an output with a small node count and large.conf a large node count.
 
-**`configs/small.conf`** — used for the ~50 node graph:
+**`configs/small.conf`**: used for the ~50 node graph:
 ```hocon
 # Path to the .dot file NetGameSim generates for the small graph.
 # This should match your outputDirectory in application.conf + the filename.
 dot_file = outputs/small.ngs.dot
 
-# Seed for reproducibility — must match NGSimulator.seed in application.conf
+# Seed for reproducibility, must match NGSimulator.seed in application.conf
 # if you want fully reproducible graphs end-to-end.
 seed = 42
 
-# Keep false — undirected edges are required for leader election correctness.
+# Keep false, undirected edges are required for leader election correctness.
 directed = false
 ```
 
-**`configs/large.conf`** — used for the ~300 node graph:
+**`configs/large.conf`**: used for the ~300 node graph:
 ```hocon
 dot_file = outputs/large.ngs.dot
 seed = 42
 directed = false
 ```
 
-The `dot_file` paths are relative to the project root. If your `outputDirectory` in `application.conf` points to `outputs` inside this project (as shown in step 3), no changes are needed — the defaults will work.
+The `dot_file` paths are relative to the project root. If your `outputDirectory` in `application.conf` points to `outputs` inside this project (as shown in step 3), no changes are needed, the defaults will work.
 
 ### 5. Download json.hpp
 
