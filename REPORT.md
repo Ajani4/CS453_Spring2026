@@ -1,4 +1,4 @@
-# REPORT.md — CS453 Spring 2026 Project Report
+# REPORT.md - CS453 Spring 2026 Project Report
 **NetGameSim to MPI Distributed Algorithms**
 
 ---
@@ -19,7 +19,7 @@ The pipeline has four distinct stages:
 
 4. MPI runtime Load the partition on each rank and run FloodMax leader election and distributed Dijkstra. Collect metrics and write results.
 
-The key insight driving the design is that by doing all graph structure analysis in Python before the MPI program starts, the C++ runtime can focus entirely on distributed algorithm logic — loading a pre-built partition and passing messages — rather than mixing graph parsing with algorithm execution.
+The key insight driving the design is that by doing all graph structure analysis in Python before the MPI program starts, the C++ runtime can focus entirely on distributed algorithm logic rather than mixing graph parsing with algorithm execution.
 
 ---
 
@@ -151,16 +151,16 @@ All collectives are called in the same order on all ranks to prevent deadlock. M
 
 ### Experiment 1: Partitioning Strategy Comparison
 
-**Hypothesis**: Contiguous partitioning will produce fewer edge cuts than round-robin on NetGameSim graphs. This is because NetGameSim assigns node IDs sequentially as the graph is built, so nodes with nearby IDs are more likely to have been added in the same phase and share edges. Grouping them into contiguous blocks keeps those edges local. Round-robin interleaves nodes from different phases, separating likely connected nodes across ranks.
+**Hypothesis**: Contiguous partitioning will produce fewer edge cuts than round-robin on NetGameSim graphs. This is because NetGameSim assigns node IDs sequentially as the graph is built, so nodes with nearby IDs are more likely to have been added in the same phase and share edges. Grouping them into contiguous blocks keeps those edges local. Round-robin interleaves nodes from different phases, separating likely-connected nodes across ranks.
 
-**Expected**: Contiguous -> fewer edge cuts -> fewer cross-rank messages -> lower runtime. The difference may be small at 4 ranks on a 50-node graph but should grow on larger graphs.
+**Expected**: Contiguous → fewer edge cuts → fewer cross-rank messages → lower runtime. The difference may be small at 4 ranks on a 50-node graph but should grow on larger graphs.
 
 ### Experiment 2: Algorithm Scaling
 
 **Hypothesis**:
 - Dijkstra iterations will scale linearly with node count (N iterations for N nodes, since each iteration settles exactly one node).
-- Dijkstra message counts will scale linearly with N.
-- Leader election iterations will scale with graph diameter, not node count so a larger graph does not necessarily mean more rounds.
+- Dijkstra message counts will scale linearly with N (two collectives per iteration).
+- Leader election iterations will scale with graph diameter, not node count, so a larger graph does not necessarily mean more rounds.
 - Wall time will be dominated by MPI startup overhead at this scale, making both graphs appear similar in total time.
 
 ---
@@ -171,36 +171,36 @@ All collectives are called in the same order on all ranks to prevent deadlock. M
 
 | Graph | Strategy | Nodes | Edge Cuts | Runtime (ms) | Total Msgs |
 |-------|----------|-------|-----------|--------------|------------|
-| Small | contiguous  | 51  | 74  | 79.2  | 612  |
-| Small | round-robin | 51  | 80  | 43.8  | 612  |
-| Large | contiguous  | 301 | 858 | 62.8  | 3612 |
-| Large | round-robin | 301 | 860 | 65.6  | 3612 |
+| Small | contiguous  | 51  | 72  | 43.3  | 612  |
+| Small | round-robin | 51  | 84  | 43.2  | 612  |
+| Large | contiguous  | 301 | 862 | 61.8  | 3612 |
+| Large | round-robin | 301 | 854 | 65.2  | 3612 |
 
 **Explanation**:
 
-The hypothesis was partially confirmed. Contiguous partitioning does produce fewer edge cuts (74 vs 80 for small, 858 vs 860 for large), consistent with the prediction that nearby node IDs share edges in NetGameSim graphs.
+The hypothesis was only partially confirmed and produced one surprising result. For the small graph, contiguous partitioning produced fewer edge cuts, 72 vs 84, consistent with the prediction that nearby node IDs share edges in NetGameSim graphs. However, for the large graph the result flipped, round-robin actually produced fewer edge cuts than contiguous. This suggests that at larger graph sizes, the node ID ordering in NetGameSim does not correlate as strongly with edge structure, so round-robin's even distribution of nodes across ranks can occasionally outperform contiguous blocking.
 
-However, total message counts are identical between strategies for the same graph. This is a notable finding: while contiguous produces fewer edge cuts, the MPI algorithm message counts are driven by the number of collective operations, which is fixed per algorithm rather than the number of cross-rank edges directly. The Dijkstra broadcast and Allgather are called once per settled node regardless of partitioning strategy.
+Total message counts are identical between strategies for the same graph regardless of edge cuts. This is because message counts are driven by the number of collective operations per algorithm, not by the raw number of cross-rank edges.
 
-The runtime difference on the small graph (79.2ms vs 43.8ms) is larger than expected and is likely due to process scheduling variance rather than a real difference caused by our algorithm seeing as on the large graph the runtimes are much closer (62.8ms vs 65.6ms), which is more representative.
+Runtimes are nearly identical between strategies on both graphs (43.3ms vs 43.2ms for small, 61.8ms vs 65.2ms for large), confirming that at this scale the partitioning choice does not meaningfully affect wall-clock performance.
 
-**Key insight**: At this graph scale and rank count, partitioning strategy has minimal impact on runtime and message counts. The difference in edge cuts (6 for small, 2 for large) is small relative to total edge counts. Partitioning strategy would matter more with a larger rank count or a graph with much stronger spatial locality.
+**Key insight**: Contiguous partitioning is not always better than round-robin. On small graphs with strong sequential node ID locality it wins on edge cuts, but on larger graphs where NetGameSim's edge structure is less correlated with node ID order, round-robin can match or beat it. Neither strategy significantly affects runtime or message counts because the collective operations dominate communication cost regardless of how nodes are partitioned.
 
 ### Experiment 2: Algorithm Scaling
 
 | Graph | Nodes | LE Iters | LE Msgs | Dijkstra Iters | Dijkstra Msgs | Wall (ms) |
 |-------|-------|----------|---------|----------------|---------------|-----------|
-| Small | 51    | 11       | 224     | 51             | 612           | 390.3     |
-| Large | 301   | 7        | 144     | 301            | 3612          | 431.7     |
+| Small | 51    | 13       | 264     | 51             | 612           | 48.5      |
+| Large | 301   | 6        | 124     | 301            | 3612          | 65.0      |
 
 **Explanation**:
 
 Dijkstra results matched the hypothesis exactly. Iterations scale linearly with node count (51 for 51 nodes, 301 for 301 nodes) and message counts scale proportionally (612 vs 3612, a ratio of ~5.9x matching the node count ratio of ~5.9x). This confirms the algorithm is working correctly and its complexity is as expected.
 
-Leader election produced a surprising resul. The large graph converged in only 7 rounds compared to 11 for the small graph. This means the large NetGameSim graph has a smaller diameter than the small one. This makes sense given how NetGameSim generates graphs, larger graphs have more edges per node on average (the `edgeProbability` parameter creates more connections as N grows), which tends to reduce diameter. Fewer rounds also means fewer cross-rank messages, explaining why leader election messages are lower for the large graph (144 vs 224).
+Leader election again produced a counterintuitive result: the large graph converged in only 6 rounds compared to 13 for the small graph. This means the large NetGameSim graph has a significantly smaller diameter than the small one despite having six times as many nodes. 
 
-Wall time is similar between graphs (390ms vs 431ms). As hypothesized, MPI process startup and the fixed overhead dominates at this scale. The 41ms difference is the marginal cost of 250 extra Dijkstra iterations plus more broadcast data on the large graph.
+Wall time is close between graphs, 48.5ms vs 65.0ms, which is a much more realistic ratio than earlier runs. The 16.5ms difference reflects the cost of 250 additional Dijkstra iterations and larger broadcasts on the 301-node graph.
 
-**Key insight**: For Dijkstra, the bottleneck is number of nodes (iterations scale with N). For leader election, the bottleneck is graph diameter, not size — and NetGameSim's larger graphs are actually denser with smaller diameters, making leader election faster on them. This is a counterintuitive result that highlights how graph structure and not just size determines distributed algorithm performance.
+**Key insight**: For Dijkstra, the bottleneck is number of nodes since iterations scale exactly with N. For leader election, the bottleneck is graph diameter, not size and NetGameSim's larger graphs are denser with smaller diameters, making leader election converge faster on them despite being six times larger. This highlights how graph structure rather than raw size determines distributed algorithm performance.
 
 ---
